@@ -3,6 +3,23 @@
 let sheetLog = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('FakturoidLog');
 let sheetProcessedEmls = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('EmlsRecords');
 
+// Initiate the config values
+
+function getConfigValues() {
+
+  var configJSON = {
+    "clientId": 'xxxx',     // Replace with your own user-level client_id, client_secret from fakturoid.cz
+    "clientSecret": 'yyy',     // Replace with your own user-level client_id, client_secret from fakturoid.cz
+    "accountSlug": 'mycompany', // Define Fakturoid account slug (mycompany if domain is app.fakturoid.cz/mycompany/)
+    "urlMatchPattern": /(https?:\/\/[^<>\s"()]+invoice%2Fpdf[^<>\s"()]*)/, //define pattern to search in email body for the URL (depend)
+    "useragentcustom": "Your_app_name (your_email@gmail.com)", // define fakturoid HTTP user agent name - required by fakturoid API:
+    "GmailQuery": 'from:receipts@bolt.eu subject:"your bolt drive" newer_than:10d' //for Bolt invoices (adjust as needed)
+  };
+
+  return configJSON;
+
+}
+
 
 /**
  * 1) Retrieve access token using Client Credentials Flow (v3).
